@@ -194,7 +194,7 @@ export class LocalStorageProvider implements StorageProvider {
   async deleteModel(id: string): Promise<void> {
     const db = await openModelsDb();
     try {
-      return await new Promise<void>((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         const tx = db.transaction(IDB_STORE, 'readwrite');
         tx.objectStore(IDB_STORE).delete(id);
         tx.oncomplete = () => resolve();
