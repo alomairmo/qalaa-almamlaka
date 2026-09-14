@@ -285,7 +285,7 @@ function CastleInner({ team }: { team: Team }) {
         {/* نافذتا القاعدة الأرضية (مثل الطوابق): تُظهران إشغال جنديَي القاعدة */}
         {([baseOccupants[0] ?? null, baseOccupants[1] ?? null] as (Soldier | null)[]).map((occ, i) => (
           <group key={`bw${i}`} position={[(i - 0.5) * 4.9, 2.35, BASE_W / 2 + 0.01]}>
-            <HorseshoeArch w={1.3} h={1.7} material={M.trim} dark={M.dark} />
+            <HorseshoeArch w={1.3} h={1.7} material={materials.trim} dark={M.dark} />
             {occ && (
               <group position={[0, -0.35, 0.12]}>
                 <SoldierBust rank={occ.rank} teamColor={team.color} badge bleeding={occ.hp < occ.maxHp} />
@@ -315,37 +315,37 @@ function CastleInner({ team }: { team: Team }) {
         <FloorModule key={f.id} floor={f} y={BASE_H + i * FLOOR_H} occupants={floorOccupants.get(f.id) ?? []} teamColor={team.color} materials={{ wall: M.floor, trim: M.trim, dark: M.dark, crack: M.crack }} />
       ))}
 
-      {/* القبة المزججة */}
+      {/* القبة المزججة بلون الفريق — قاعدتها تتغلغل 0.03 في السطح (لا z-fighting) */}
       <group position={[0, topY, 0]}>
-        <mesh position={[0, 0.15, 0]} material={M.trim}>
-          <boxGeometry args={[FLOOR_W + 0.4, 0.3, FLOOR_W + 0.4]} />
+        <mesh position={[0, 0.22, 0]} material={M.trim} castShadow>
+          <cylinderGeometry args={[2.6, 2.9, 0.5, 12]} />
         </mesh>
-        <mesh position={[0, 1.5, 0]} material={M.dome} castShadow>
-          <sphereGeometry args={[2.5, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2]} />
+        <mesh position={[0, 0.5, 0]} material={M.dome} castShadow>
+          <sphereGeometry args={[2.3, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2]} />
         </mesh>
-        {/* أضلاع القبة */}
-        {[0, Math.PI / 4, Math.PI / 2, (3 * Math.PI) / 4].map((a, i) => (
-          <mesh key={i} position={[0, 1.5, 0]} rotation={[0, a, 0]} material={M.gold}>
-            <torusGeometry args={[2.5, 0.07, 6, 18, Math.PI]} />
-          </mesh>
-        ))}
-        <mesh position={[0, 3.3, 0]} material={M.gold}>
+        <mesh position={[0, 2.9, 0]} material={M.gold}>
           <coneGeometry args={[0.22, 0.8, 8]} />
         </mesh>
-        {/* الراية فوق القبة — الجهة المعاكسة لمنصة المنجنيق */}
-        <group position={[bannerX, 3.2, bannerZ]}>
-          <Banner color={team.color} height={3.6} />
-        </group>
       </group>
 
-      {/* منصة المنجنيق على السطح */}
-      {team.castle.catapultReady && (
-        <group position={[plat.x, topY, plat.z]}>
-          <CatapultModel teamId={team.id} castlePos={pos} highlight={isMyCatapult} castleTopY={topY} castleYaw={yaw} teamIndex={idx} />
-        </group>
-      )}
+      {/* منصة المنجنيق فوق السطح (تعلو مع الطوابق) — أمام القبة دائمًا:
+          الإزاحة المحلية تُشتق من اتجاه مركز الخريطة (ساحة المعركة) لكل قلعة
+          فلا تحجب القبة خط النظر من كاميرا FPS نحو الأفق */}
+      <group
+        position={[plat.x, topY + 0.3, plat.z]}
+        rotation={[0, Math.atan2(-pos.x, -pos.z) - yaw, 0]}
+        scale={0.9}
+      >
+        <CatapultModel aiming={isMyCatapult} />
+      </group>
+
+      {/* راية الفريق — الجهة المعاكسة للمنصة */}
+      <group position={[bannerX, topY + 0.2, bannerZ]} rotation={[0, -yaw, 0]}>
+        <Banner teamIndex={idx} height={2.6} />
+      </group>
     </group>
   );
 }
 
-export default memo(CastleInner);
+const Castle = memo(CastleInner);
+export default Castle;
