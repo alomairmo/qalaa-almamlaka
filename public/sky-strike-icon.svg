@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- small friendly cloud -->
+  <path d="M 22 58 Q 10 44 24 34 Q 28 18 46 22 Q 56 8 74 16 Q 92 12 98 28 Q 112 34 104 48 Q 108 60 92 62 L 34 62 Q 24 64 22 58 Z" fill="#DCE9F2" stroke="#8D99AE" stroke-width="4"/>
+  <!-- warm gold bolt -->
+  <path d="M 66 40 L 46 74 L 60 74 L 52 108 L 82 66 L 66 66 L 76 40 Z" fill="#E8B93B" stroke="#B8860B" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M 64 46 L 54 66 L 64 66 L 58 88" stroke="#FFF3C4" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>

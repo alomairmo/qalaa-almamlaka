@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="stoneg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#AAB4C4"/><stop offset="1" stop-color="#8D99AE"/>
+    </linearGradient>
+  </defs>
+  <!-- boulder cluster -->
+  <path d="M 18 100 Q 12 74 32 62 Q 40 42 62 46 Q 78 34 94 48 Q 114 54 112 76 Q 122 90 108 102 Q 64 116 18 100 Z" fill="url(#stoneg)" stroke="#5B6572" stroke-width="4"/>
+  <path d="M 34 92 Q 30 72 46 64 Q 60 58 66 70 Q 76 66 84 74 Q 94 80 88 92 Q 60 100 34 92 Z" fill="#8D99AE" stroke="#5B6572" stroke-width="3"/>
+  <path d="M 46 66 Q 52 60 60 62" stroke="#E9D8A6" stroke-width="3" fill="none" opacity="0.6" stroke-linecap="round"/>
+  <path d="M 74 50 Q 84 46 92 52" stroke="#E9D8A6" stroke-width="3" fill="none" opacity="0.5" stroke-linecap="round"/>
+</svg>

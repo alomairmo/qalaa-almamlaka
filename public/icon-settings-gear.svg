@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <radialGradient id="brass" cx="0.4" cy="0.35" r="0.9">
+      <stop offset="0" stop-color="#F5D76E"/><stop offset="0.6" stop-color="#E8B93B"/><stop offset="1" stop-color="#B8860B"/>
+    </radialGradient>
+  </defs>
+  <!-- gear teeth = 8-pointed star silhouette -->
+  <polygon points="64.0,6.0 80.1,25.2 105.0,23.0 102.8,47.9 122.0,64.0 102.8,80.1 105.0,105.0 80.1,102.8 64.0,122.0 47.9,102.8 23.0,105.0 25.2,80.1 6.0,64.0 25.2,47.9 23.0,23.0 47.9,25.2" fill="url(#brass)" stroke="#B8860B" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="64" cy="64" r="30" fill="#0F5E63" stroke="#B8860B" stroke-width="4"/>
+  <circle cx="64" cy="64" r="14" fill="#0B3E43" stroke="#E8B93B" stroke-width="3"/>
+  <circle cx="64" cy="64" r="5" fill="#F5D76E"/>
+</svg>

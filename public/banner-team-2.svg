@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="384" viewBox="0 0 256 384">
+  <defs>
+    <linearGradient id="cloth2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C94F3D"/><stop offset="0.55" stop-color="#C94F3D"/><stop offset="1" stop-color="#2E1B0E" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <!-- hanging rod -->
+  <rect x="16" y="6" width="224" height="14" rx="7" fill="#4A2F1B" stroke="#2E1B0E" stroke-width="2"/>
+  <circle cx="20" cy="13" r="8" fill="#B8860B"/><circle cx="236" cy="13" r="8" fill="#B8860B"/>
+  <!-- banner cloth with swallowtail -->
+  <path d="M 32 20 L 224 20 L 224 300 L 128 372 L 32 300 Z" fill="url(#cloth2)" stroke="#2E1B0E" stroke-width="4"/>
+  <path d="M 44 32 L 212 32 L 212 292 L 128 352 L 44 292 Z" fill="none" stroke="#E8B93B" stroke-width="3" opacity="0.9"/>
+  <!-- 8-pointed star emblem -->
+  <polygon points="128.0,104.0 138.7,144.1 174.7,123.3 153.9,159.3 194.0,170.0 153.9,180.7 174.7,216.7 138.7,195.9 128.0,236.0 117.3,195.9 81.3,216.7 102.1,180.7 62.0,170.0 102.1,159.3 81.3,123.3 117.3,144.1" fill="#E8B93B" stroke="#2E1B0E" stroke-width="3"/>
+  <polygon points="128.0,136.0 133.7,156.1 152.0,146.0 141.9,164.3 162.0,170.0 141.9,175.7 152.0,194.0 133.7,183.9 128.0,204.0 122.3,183.9 104.0,194.0 114.1,175.7 94.0,170.0 114.1,164.3 104.0,146.0 122.3,156.1" fill="#C94F3D" stroke="#E8B93B" stroke-width="2.5"/>
+  <circle cx="128" cy="170" r="10" fill="#E8B93B" stroke="#2E1B0E" stroke-width="2"/>
+  <!-- gold fringe bottom -->
+  <g fill="#E8B93B" stroke="#B8860B" stroke-width="1.5">
+    <path d="M 40 296 l 14 26 l 14 -19 Z"/>
+    <path d="M 82 316 l 14 26 l 14 -19 Z"/>
+    <path d="M 160 323 l 14 26 l 14 -19 Z"/>
+    <path d="M 188 297 l 14 26 l 14 -19 Z"/>
+  </g>
+  <!-- subtle folds -->
+  <path d="M 78 20 L 70 306" stroke="#000000" stroke-width="6" opacity="0.08" fill="none"/>
+  <path d="M 178 20 L 186 306" stroke="#ffffff" stroke-width="6" opacity="0.10" fill="none"/>
+</svg>

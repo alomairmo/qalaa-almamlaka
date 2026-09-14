@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- stacked crenellated floor -->
+  <g stroke="#5B6572" stroke-width="3">
+    <rect x="22" y="84" width="84" height="26" rx="3" fill="#8D99AE"/>
+    <rect x="30" y="58" width="68" height="26" rx="3" fill="#AAB4C4"/>
+  </g>
+  <!-- crenellations -->
+  <g fill="#AAB4C4" stroke="#5B6572" stroke-width="3">
+    <rect x="30" y="46" width="14" height="12"/><rect x="57" y="46" width="14" height="12"/><rect x="84" y="46" width="14" height="12"/>
+  </g>
+  <!-- mortar lines -->
+  <g stroke="#E9D8A6" stroke-width="2" opacity="0.7">
+    <path d="M 22 97 H 106"/><path d="M 50 84 V 110"/><path d="M 78 84 V 110"/><path d="M 64 58 V 84"/>
+  </g>
+  <!-- mason trowel -->
+  <path d="M 84 30 L 116 52 L 100 64 L 78 40 Z" fill="#17A2A0" stroke="#0B3E43" stroke-width="3"/>
+  <path d="M 78 40 L 62 52" stroke="#4A2F1B" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 78 40 L 62 52" stroke="#2E1B0E" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <!-- sparkle -->
+  <polygon points="34.0,20.0 35.9,27.4 42.5,23.5 38.6,30.1 46.0,32.0 38.6,33.9 42.5,40.5 35.9,36.6 34.0,44.0 32.1,36.6 25.5,40.5 29.4,33.9 22.0,32.0 29.4,30.1 25.5,23.5 32.1,27.4" fill="#F5D76E"/>
+</svg>

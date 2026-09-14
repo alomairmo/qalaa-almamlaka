@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <circle cx="128" cy="128" r="104" fill="none" stroke="#E8B93B" stroke-width="6" opacity="0.9"/>
+  <circle cx="128" cy="128" r="104" fill="none" stroke="#FFF3C4" stroke-width="2" opacity="0.6"/>
+  <circle cx="128" cy="128" r="72" fill="none" stroke="#B8860B" stroke-width="2.5" opacity="0.7"/>
+  <!-- 4 notches -->
+  <g stroke="#E8B93B" stroke-width="8" stroke-linecap="round">
+    <path d="M 128 8 V 34"/><path d="M 128 222 V 248"/><path d="M 8 128 H 34"/><path d="M 222 128 H 248"/>
+  </g>
+  <!-- subtle star motif -->
+  <polygon points="128.0,98.0 133.0,116.0 149.2,106.8 140.0,123.0 158.0,128.0 140.0,133.0 149.2,149.2 133.0,140.0 128.0,158.0 123.0,140.0 106.8,149.2 116.0,133.0 98.0,128.0 116.0,123.0 106.8,106.8 123.0,116.0" fill="none" stroke="#F5D76E" stroke-width="2" opacity="0.6"/>
+  <circle cx="128" cy="128" r="8" fill="#FFFFFF" stroke="#E8B93B" stroke-width="3"/>
+</svg>

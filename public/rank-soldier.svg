@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <radialGradient id="med" cx="0.4" cy="0.35" r="0.9">
+      <stop offset="0" stop-color="#F5D76E"/><stop offset="0.55" stop-color="#E8B93B"/><stop offset="1" stop-color="#B8860B"/>
+    </radialGradient>
+  </defs>
+  <polygon points="96.0,8.0 120.5,36.9 158.2,33.8 155.1,71.5 184.0,96.0 155.1,120.5 158.2,158.2 120.5,155.1 96.0,184.0 71.5,155.1 33.8,158.2 36.9,120.5 8.0,96.0 36.9,71.5 33.8,33.8 71.5,36.9" fill="url(#med)" stroke="#B8860B" stroke-width="5" stroke-linejoin="round"/>
+  <circle cx="96" cy="96" r="56" fill="#46638C" stroke="#B8860B" stroke-width="4"/>
+  <circle cx="96" cy="96" r="48" fill="none" stroke="#F5D76E" stroke-width="2" opacity="0.7"/>
+  
+  <!-- crossed steel swords -->
+  <g stroke="#46505C" stroke-width="3">
+    <path d="M 64 130 L 118 62 L 128 58 L 124 70 L 74 136 Z" fill="#D8DEE8"/>
+    <path d="M 128 130 L 74 62 L 64 58 L 68 70 L 118 136 Z" fill="#8D99AE"/>
+  </g>
+  <rect x="60" y="124" width="20" height="7" rx="3" fill="#B8860B" transform="rotate(48 70 127)"/>
+  <rect x="112" y="124" width="20" height="7" rx="3" fill="#B8860B" transform="rotate(-48 122 127)"/>
+</svg>

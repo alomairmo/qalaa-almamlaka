@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <radialGradient id="med" cx="0.4" cy="0.35" r="0.9">
+      <stop offset="0" stop-color="#F5D76E"/><stop offset="0.55" stop-color="#E8B93B"/><stop offset="1" stop-color="#B8860B"/>
+    </radialGradient>
+  </defs>
+  <polygon points="96.0,8.0 120.5,36.9 158.2,33.8 155.1,71.5 184.0,96.0 155.1,120.5 158.2,158.2 120.5,155.1 96.0,184.0 71.5,155.1 33.8,158.2 36.9,120.5 8.0,96.0 36.9,71.5 33.8,33.8 71.5,36.9" fill="url(#med)" stroke="#B8860B" stroke-width="5" stroke-linejoin="round"/>
+  <circle cx="96" cy="96" r="56" fill="#0B3E43" stroke="#B8860B" stroke-width="4"/>
+  <circle cx="96" cy="96" r="48" fill="none" stroke="#F5D76E" stroke-width="2" opacity="0.7"/>
+  
+  <!-- radiant gold star -->
+  <g stroke="#E8B93B" stroke-width="4" stroke-linecap="round">
+    <path d="M 96 44 V 58"/><path d="M 96 134 V 148"/><path d="M 44 96 H 58"/><path d="M 134 96 H 148"/>
+    <path d="M 60 60 L 70 70"/><path d="M 122 122 L 132 132"/><path d="M 132 60 L 122 70"/><path d="M 70 122 L 60 132"/>
+  </g>
+  <polygon points="96.0,62.0 101.7,82.1 120.0,72.0 109.9,90.3 130.0,96.0 109.9,101.7 120.0,120.0 101.7,109.9 96.0,130.0 90.3,109.9 72.0,120.0 82.1,101.7 62.0,96.0 82.1,90.3 72.0,72.0 90.3,82.1" fill="#F5D76E" stroke="#B8860B" stroke-width="3"/>
+  <circle cx="96" cy="96" r="8" fill="#B8860B"/>
+</svg>

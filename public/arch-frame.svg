@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="120" viewBox="0 0 800 120">
+  <defs>
+    <linearGradient id="woodg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5C3A22"/><stop offset="0.5" stop-color="#4A2F1B"/><stop offset="1" stop-color="#2E1B0E"/>
+    </linearGradient>
+    <linearGradient id="goldg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F5D76E"/><stop offset="1" stop-color="#B8860B"/>
+    </linearGradient>
+  </defs>
+  <!-- horseshoe arch band -->
+  <path d="M 20 120 L 20 60 Q 20 12 400 12 Q 780 12 780 60 L 780 120 L 740 120 L 740 64 Q 740 40 400 40 Q 60 40 60 64 L 60 120 Z" fill="url(#woodg)"/>
+  <path d="M 32 118 L 32 62 Q 32 24 400 24 Q 768 24 768 62 L 768 118" fill="none" stroke="url(#goldg)" stroke-width="3"/>
+  <path d="M 48 118 L 48 64 Q 48 32 400 32 Q 752 32 752 64 L 752 118" fill="none" stroke="#E8B93B" stroke-width="1.5" opacity="0.7"/>
+  <!-- filigree dots along arch -->
+  <g fill="#F5D76E">
+    <circle cx="400" cy="18" r="4"/><circle cx="330" cy="20" r="3"/><circle cx="470" cy="20" r="3"/>
+    <circle cx="260" cy="26" r="3"/><circle cx="540" cy="26" r="3"/>
+    <circle cx="195" cy="38" r="3"/><circle cx="605" cy="38" r="3"/>
+    <circle cx="140" cy="54" r="3"/><circle cx="660" cy="54" r="3"/>
+  </g>
+  <!-- hanging lanterns at both ends -->
+  <g stroke="#E8B93B" stroke-width="2" fill="none">
+    <path d="M 48 40 L 48 58"/><path d="M 752 40 L 752 58"/>
+  </g>
+  <g>
+    <path d="M 38 58 h 20 l -3 26 h -14 Z" fill="#B8860B" stroke="#F5D76E" stroke-width="1.5"/>
+    <rect x="42" y="62" width="12" height="16" rx="2" fill="#F5D76E" opacity="0.85"/>
+    <path d="M 742 58 h 20 l -3 26 h -14 Z" fill="#B8860B" stroke="#F5D76E" stroke-width="1.5"/>
+    <rect x="746" y="62" width="12" height="16" rx="2" fill="#F5D76E" opacity="0.85"/>
+  </g>
+</svg>
