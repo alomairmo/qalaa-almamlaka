@@ -30,6 +30,7 @@ import Labels from './Labels';
 import CameraRig from './camera/CameraRig';
 import CatapultRig from './camera/CatapultRig';
 import EventPlayer from './event-player';
+import BrownScreenWatchdog from './BrownScreenWatchdog';
 import { stonesPosition } from './layout';
 
 /** قبة سماء متدرجة: #AEE3F5 أعلى ← #E8F6E8 ← #F6EED9 عند الأفق (design.md §2.3) */
@@ -143,6 +144,8 @@ function SceneContent() {
       <CameraRig />
       <CatapultRig />
       <EventPlayer />
+      {/* كاشف الشاشة البنية — يتولى الرسم أثناء اللعب ويقرأ عيّنات بكسلات */}
+      <BrownScreenWatchdog />
     </group>
   );
 }
