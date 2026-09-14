@@ -285,7 +285,7 @@ function CastleInner({ team }: { team: Team }) {
         {/* نافذتا القاعدة الأرضية (مثل الطوابق): تُظهران إشغال جنديَي القاعدة */}
         {([baseOccupants[0] ?? null, baseOccupants[1] ?? null] as (Soldier | null)[]).map((occ, i) => (
           <group key={`bw${i}`} position={[(i - 0.5) * 4.9, 2.35, BASE_W / 2 + 0.01]}>
-            <HorseshoeArch w={1.3} h={1.7} material={materials.trim} dark={M.dark} />
+            <HorseshoeArch w={1.3} h={1.7} material={M.trim} dark={M.dark} />
             {occ && (
               <group position={[0, -0.35, 0.12]}>
                 <SoldierBust rank={occ.rank} teamColor={team.color} badge bleeding={occ.hp < occ.maxHp} />
