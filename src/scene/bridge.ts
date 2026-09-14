@@ -150,6 +150,17 @@ interface SceneBridgeData {
    * اتجاهه الافتراضي (نحو المركز) فيدعم الدوران الكامل 360°.
    */
   catapultBaseYaw: number;
+  /**
+   * «شاشة بنية» مرصودة: كاشف البكسلات (BrownScreenWatchdog) وجد الإطار
+   * موحّدًا بلون خلفية الصفحة/شفافًا — فشل صامت بلا استثناء لا يلتقطه حد
+   * الأخطاء. تقرؤه الواجهة لتعرض زر «استعادة العرض 🔄».
+   */
+  brownScreen: boolean;
+  /**
+   * عدّاد إعادة تركيب المشهد: يتزايد مع كل طلب استعادة (يدوي أو من طبقة
+   * الشاشة البنية)، وتستخدمه الواجهة ضمن مفتاح GameCanvas لإجبار remount.
+   */
+  sceneNonce: number;
 }
 
 let floatSeq = 0;
@@ -173,6 +184,8 @@ export const useSceneBridge = create<SceneBridgeData>(() => ({
   stickyConfirm: null,
   catapultYaw: 0,
   catapultBaseYaw: 0,
+  brownScreen: false,
+  sceneNonce: 0,
 }));
 
 // ─── أوامر من المشهد/الواجهة ───
@@ -350,6 +363,26 @@ export function stickyGateReleased(gate: StickyGate, fallbackMs = STICKY_FALLBAC
  */
 export function focusEntity(position: Vec3, radius = 3, durationMs = 1200): void {
   setCameraJob({ kind: 'focus-entity', points: [{ ...position }], radius, startedAt: performance.now(), durationMs });
+}
+
+/**
+ * كاشف الشاشة البنية يعلن فشل عرض صامت — الواجهة تعرض زر الاستعادة.
+ * يُسجَّل التحذير مرة واحدة لكل episode (حتى تُمسح الراية بالاستعادة).
+ */
+export function reportBrownScreen(): void {
+  if (!useSceneBridge.getState().brownScreen) {
+    console.warn('[scene] رُصدت شاشة بنية: إطار موحّد بلون الخلفية/شفاف رغم طور اللعب — عُرض زر الاستعادة');
+  }
+  useSceneBridge.setState({ brownScreen: true });
+}
+
+/**
+ * طلب إعادة تركيب المشهد (زر الاستعادة اليدوي الدائم أو طبقة الشاشة البنية):
+ * يزيد sceneNonce (مفتاح GameCanvas في App) ويمسح راية الشاشة البنية —
+ * الكاشف نفسه يُعاد تركيبه مع المشهد فتتجدد مهلة السماح تلقائيًا.
+ */
+export function requestSceneRemount(): void {
+  useSceneBridge.setState((s) => ({ sceneNonce: s.sceneNonce + 1, brownScreen: false }));
 }
 
 /** تسجيل آخر رمية قبل استدعاء engineApi.fireCatapult */
