@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* توكنز قلاع المملكة (design.md §2) — متاحة كمتغيرات CSS */
+    --teal-900: #0b3e43;
+    --teal-700: #0f5e63;
+    --teal-500: #17a2a0;
+    --turquoise-glaze: #2ec4b6;
+    --gold-600: #b8860b;
+    --gold-500: #e8b93b;
+    --gold-300: #f5d76e;
+    --sand-200: #e9d8a6;
+    --parchment: #f6eed9;
+    --wood-700: #4a2f1b;
+    --wood-900: #2e1b0e;
+    --ink: #2b2118;
+    --night-800: #123b4f;
+    --stone-400: #8d99ae;
+    --danger-500: #d64545;
+    --success-500: #43a95c;
+    --sky-300: #aee3f5;
+
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.625rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 240 5.9% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-wood-900 text-foreground;
+    font-family: "Tajawal", sans-serif;
+    /* مؤشر السيف النحاسي العام — design.md §5 */
+    cursor: url("/cursor-scimitar.svg") 4 4, auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  a,
+  [role="button"],
+  input,
+  textarea,
+  select,
+  label {
+    cursor: url("/cursor-scimitar.svg") 4 4, pointer;
+  }
+
+  /* حلقة تركيز ذهبية لكل العناصر التفاعلية — design.md §13 */
+  :focus-visible {
+    outline: 3px solid var(--gold-500);
+    outline-offset: 2px;
+  }
+
+  /* شريط تمرير خشبي رفيع للوحات الداخلية — design.md §4 */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--wood-900);
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6b4527, var(--wood-700));
+    border: 2px solid var(--wood-900);
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #8a5a34, #6b4527);
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--wood-700) var(--wood-900);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-logo-float,
+    .animate-sparkle-sweep {
+      animation: none !important;
+    }
+  }
+}
+
+@layer components {
+  /* تدرّج الزر الذهبي الأساسي — design.md §2.3 */
+  .btn-gold-gradient {
+    background: linear-gradient(180deg, #f5d76e, #e8b93b 55%, #c9962a);
+    box-shadow: inset 0 1px 0 #fff3c4, 0 4px 12px rgba(43, 33, 24, 0.25);
+  }
+  /* تدرّج الزر الفيروزي الثانوي — design.md §2.3 */
+  .btn-teal-gradient {
+    background: linear-gradient(180deg, #2ec4b6, #17a2a0 55%, #0f5e63);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 4px 12px rgba(43, 33, 24, 0.25);
+  }
+  /* زجاج HUD الليلي — design.md §2.3 */
+  .hud-glass {
+    background: rgba(11, 62, 67, 0.82);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(245, 215, 110, 0.35);
+  }
+  /* لوح الرق (parchment) مع نسيج خفيف — design.md §2.3 */
+  .parchment-panel {
+    background-color: var(--parchment);
+    background-image: url("/parchment-texture.png");
+    background-blend-mode: multiply;
+  }
+  /* شريط الزليج المتكرر */
+  .zellige-strip {
+    background-image: url("/zellige-border.svg");
+    background-repeat: repeat-x;
+    background-size: 96px 96px;
+  }
+}
