@@ -24,7 +24,7 @@ import type { GameEngineApi } from '@/contracts/engine-api';
 import type { SyncStatus } from '@/contracts/storage';
 import { DEFAULT_CATAPULT, DEFAULT_CATAPULT_POWER } from '@/contracts/defaults';
 import { createRng, type RNG } from './rng';
-import { createInitialState, getTeam } from './logic/state';
+import { createInitialState, finiteOr, getTeam } from './logic/state';
 import { startTurn as logicStartTurn, resolveAnswer, endTurn as logicEndTurn } from './logic/rounds';
 import { buildFloor as logicBuildFloor, repairFloor as logicRepairFloor } from './logic/castle';
 import { recruitSoldier as logicRecruitSoldier } from './logic/soldiers';
@@ -511,14 +511,44 @@ function setPhase(phase: GamePhase): void {
 }
 
 /**
- * تطبيع حالة محمّلة من حفظ قديم: الحقول التي أُضيفت لاحقًا
+ * تطبيع حالة محمّلة من حفظ قديم/سحابي: الحقول التي أُضيفت لاحقًا
  * (catapultPowerByTeam، مقابض المنجنيق الجديدة) تُملأ بالافتراضيات
  * دون تغيير schemaVersion.
+ *
+ * حراس الفساد/NaN (بلاغ «الشاشة البنية» عند بدء/استئناف موسم مرتبط):
+ * JSON يحوّل NaN إلى null فيُرجع الحفظ السحابي حقولًا غير مهيأة، وأي NaN
+ * يتسرب إلى موارد فريق/فهرس دور/بنية قلعة يسمّم حسابات المشهد والكاميرا
+ * بلا استثناء. نعقّم هنا: القوائم، فهرس الدور، موارد كل فريق، وبنية قلعته.
  */
-function normalizeLoadedState(saved: GameState): GameState {
+export function normalizeLoadedState(saved: GameState): GameState {
   const s = structuredClone(saved);
+  if (!Array.isArray(s.teams)) s.teams = [];
+  if (!Array.isArray(s.convoys)) s.convoys = [];
+  if (!Array.isArray(s.piles)) s.piles = [];
+  if (!Array.isArray(s.log)) s.log = [];
   s.catapultPowerByTeam = s.catapultPowerByTeam ?? {};
+  // فهرس دور خارج النطاق (حفظ موسم بعدد فرق مختلف) ⇒ teams[turnIndex] غير
+  // معرّف في مسارات الكاميرا/الواجهة — نثبّته ضمن الفرق الموجودة
+  s.turnIndex = s.teams.length
+    ? Math.min(s.teams.length - 1, Math.max(0, Math.round(finiteOr(s.turnIndex, 0))))
+    : 0;
   for (const t of s.teams) {
+    t.goldInside = Math.max(0, Math.round(finiteOr(t.goldInside, 0)));
+    t.goldOutside = Math.max(0, Math.round(finiteOr(t.goldOutside, 0)));
+    t.stonesOutside = Math.max(0, Math.round(finiteOr(t.stonesOutside, 0)));
+    if (!Array.isArray(t.soldiers)) t.soldiers = [];
+    if (!t.castle || typeof t.castle !== 'object') {
+      t.castle = {
+        floors: [],
+        baseHp: s.settings.combat.floorHp,
+        baseMaxHp: s.settings.combat.floorHp,
+        catapultReady: true,
+      };
+    } else {
+      if (!Array.isArray(t.castle.floors)) t.castle.floors = [];
+      t.castle.baseMaxHp = Math.max(1, Math.round(finiteOr(t.castle.baseMaxHp, s.settings.combat.floorHp)));
+      t.castle.baseHp = Math.min(t.castle.baseMaxHp, Math.max(0, Math.round(finiteOr(t.castle.baseHp, t.castle.baseMaxHp))));
+    }
     if (typeof s.catapultPowerByTeam[t.id] !== 'number') {
       s.catapultPowerByTeam[t.id] = DEFAULT_CATAPULT_POWER;
     }
@@ -648,7 +678,9 @@ export function startLinkedSeason(
   usable.forEach((d, i) => {
     const t = s.teams[i];
     t.name = `المجموعة ${d.name}`;
-    t.goldInside = Math.max(0, Math.round(scores[d.id] ?? 0)); // ذهب البداية = درجة الأسبوع
+    // ذهب البداية = درجة الأسبوع — مع حارس NaN: درجة فاسدة/غير مهيأة من
+    // القاعدة كانت تتسلل (Math.max(0, NaN) = NaN) فتسمّم حسابات الذهب والمشهد
+    t.goldInside = Math.max(0, Math.round(finiteOr(scores[d.id], 0)));
     groupIdByTeamId[t.id] = d.id;
   });
   s.phase = 'idle';
