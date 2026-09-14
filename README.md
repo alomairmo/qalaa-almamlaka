@@ -14,7 +14,7 @@
 ## التشغيل محليًا
 
 ```bash
-npm install
+npm install                      # يولّد package-lock.json أيضًا (غير مضمّن في المستودع)
 bash scripts/restore-assets.sh   # استعادة الصور الثنائية إلى public/ (مرة واحدة)
 npm run dev
 ```
