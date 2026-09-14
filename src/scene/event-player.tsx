@@ -715,7 +715,7 @@ function play(ev: GameEvent): Played {
       const d = ev.delta;
       const parts: string[] = [];
       if (d.gold) parts.push(`${d.gold} 🪙`);
-      if (d.stones) parts.push(`+${d.stones} 🪨`);
+      if (d.stones) parts.push(`${d.stones} 🪨`);
       if (d.soldiers) parts.push(`${d.soldiers} ⚔️`);
       if (d.floors) parts.push(`${d.floors} 🏰`);
       pushFloat({ x: c.x, y: 5, z: c.z }, `جزاء المعلم ${parts.join(' ')}`, 'red');
