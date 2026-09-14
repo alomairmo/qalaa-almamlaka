@@ -17,6 +17,15 @@ export function noChange(state: GameState): LogicResult {
   return { state, events: [] };
 }
 
+/**
+ * عدد منتهٍ أو بديل — حارس القيم القادمة من حفظ سحابي/شبكة: JSON يحوّل
+ * NaN إلى null، والقيم غير المهيأة تصل undefined. تسريب NaN إلى موارد
+ * فريق كان جزءًا من بلاغات «الشاشة البنية» (حسابات مواقع/مقاييس مسمومة).
+ */
+export function finiteOr(value: unknown, fallback: number): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+
 /** نسخة عميقة من الحالة (الحالة بيانات خام JSON فقط) */
 export function cloneState(state: GameState): GameState {
   return structuredClone(state);
