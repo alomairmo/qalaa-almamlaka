@@ -30,7 +30,7 @@ import { buildFloor as logicBuildFloor, repairFloor as logicRepairFloor } from '
 import { recruitSoldier as logicRecruitSoldier } from './logic/soldiers';
 import { canUseCatapult, fireCatapult as logicFireCatapult, normalizeCatapultPower } from './logic/catapult';
 import { dispatchArmy as logicDispatchArmy } from './logic/combat';
-import { declareWinner as logicDeclareWinner, resetGame as logicResetGame, setQuestionBank as logicSetQuestionBank, updateSettings as logicUpdateSettings, teamTotalGold } from './logic/season';
+import { declareWinner as logicDeclareWinner, resetGame as logicResetGame, setQuestionBank as logicSetQuestionBank, updateSettings as logicUpdateSettings } from './logic/season';
 import { applyTeacherAdjustment as logicTeacherAdjustment } from './logic/teacher';
 import { buildQuestionView } from './logic/questions';
 import { createTutorialState, TUTORIAL_STEPS } from './tutorial-script';
@@ -40,10 +40,10 @@ import { SupabaseProvider, type GroupDef } from './storage/supabase-provider';
 import {
   clearLinkSession,
   extractLinkGroupIds,
+  extractLinkSheetBase,
   flushLinkedNow,
   getLinkSession,
   getLinkStatus,
-  markTeamGoldKnown,
   notifyLinkedCommit,
   onExternalGoldChange,
   onLinkStatusChange,
@@ -62,20 +62,18 @@ onLinkStatusChange((s) => {
   useGameStore.setState({ syncStatus: s });
 });
 
-// استطلاع القاعدة ← اللعبة: درجة غيّرها المعلم في الكشف تدخل اللعبة مباشرة
-// كمنحة/جزاء مرئي (applyTeacherAdjustment). markTeamGoldKnown قبل/بعد يمنع
-// الارتداد (لا يُعاد رفع التعديل الخارجي كأنه تغيّر داخلي).
-onExternalGoldChange((teamId, remoteTotal) => {
+// استطلاع القاعدة ← اللعبة ودمج الاستئناف: فرق ذهب خارجي (من الكشف) يدخل
+// اللعبة مباشرة كمنحة/جزاء مرئي (applyTeacherAdjustment). link-session
+// يثبّت sheetBase عبر markTeamGoldKnown قبل استدعاء هذا الرد، فيمرّ
+// الالتزام الناتج دون أن يُعاد رفعه كتغيّر داخلي (منع ارتداد).
+onExternalGoldChange((teamId, delta) => {
   const data = useGameStore.getState();
   if (data.tutorialActive) return;
   if (['title', 'tutorial', 'victory'].includes(data.state.phase)) return;
-  const current = teamTotalGold(data.state, teamId);
-  const diff = Math.round(remoteTotal) - current;
-  markTeamGoldKnown(teamId, Math.round(remoteTotal)); // قبل الالتزام
-  if (diff !== 0) {
-    engineApi.applyTeacherAdjustment(teamId, { gold: diff });
+  const gold = Math.round(delta);
+  if (gold !== 0) {
+    engineApi.applyTeacherAdjustment(teamId, { gold });
   }
-  markTeamGoldKnown(teamId, Math.round(remoteTotal)); // بعده: حتى لو قُصّ الفرق
 });
 
 // الاستطلاع يتوقف عمليًا خارج اللعب الفعلي (عنوان/توتوريال/فوز)
@@ -156,10 +154,15 @@ function persist(state: GameState, events: GameEvent[]): void {
   // الذاكرة وتنتقل للموسم الجديد عبر newSeason/resetGame.
   if (state.phase === 'title') return;
   const p = provider();
-  // في الموسم المرتبط نضمّن خريطة groupId في الحفظ المحلي أيضًا لاستعادة الجلسة
+  // في الموسم المرتبط نضمّن خريطة groupId وsheetBase في الحفظ المحلي أيضًا
+  // لاستعادة الجلسة ونموذج «القاعدة + الفرق» بعد إعادة التحميل
   const sess = getLinkSession();
   const toSave = sess
-    ? ({ ...state, linkGroupIds: sess.groupIdByTeamId } as GameState)
+    ? ({
+        ...state,
+        linkGroupIds: sess.groupIdByTeamId,
+        linkSheetBaseByTeamId: { ...(sess.sheetBaseByTeamId ?? {}) },
+      } as GameState)
     : state;
   void p.saveGame(toSave).catch(() => undefined);
   for (const ev of events) void p.appendEvent(ev).catch(() => undefined);
@@ -259,18 +262,26 @@ export const engineApi: GameEngineApi = {
     if (!saved) return null;
     stopTimer();
     const restored = normalizeLoadedState(stripLinkExtras(saved));
-    // إن كان الموسم المحفوظ مرتبطًا بالنظام التعليمي نستعيد جلسته ونكمل المزامنة
+    // إن كان الموسم المحفوظ مرتبطًا بالنظام التعليمي نستعيد جلسته ونكمل المزامنة.
+    // sheetBase يُستعاد من الحفظ أولًا ثم من الجلسة المخزّنة محليًا.
     const linkIds = extractLinkGroupIds(saved);
     const storedSession = restoreLinkSession();
     if (linkIds && storedSession) {
-      setLinkSession({ ...storedSession, groupIdByTeamId: linkIds });
+      setLinkSession({
+        ...storedSession,
+        groupIdByTeamId: linkIds,
+        sheetBaseByTeamId: extractLinkSheetBase(saved) ?? storedSession.sheetBaseByTeamId,
+      });
     }
+    const nextState = { ...restored, phase: restored.phase === 'title' ? 'idle' : restored.phase };
     useGameStore.setState({
-      state: { ...restored, phase: restored.phase === 'title' ? 'idle' : restored.phase },
+      state: nextState,
       eventQueue: [],
       questionView: null,
       timer: null,
     });
+    // دمج «القاعدة + الفرق» قبل أي رفع حتى لا تُدهس إضافات المعلم في الكشف
+    if (getLinkSession()) void flushLinkedNow(nextState);
     return [];
   },
 
@@ -715,6 +726,7 @@ export async function resumeLinkedSeason(classKey: string, week: number): Promis
   const save = await linkedProvider.loadSave(classKey, week);
   if (!save) return false;
   const linkIds = extractLinkGroupIds(save.state) ?? {};
+  const sheetBase = extractLinkSheetBase(save.state) ?? undefined;
   const state = normalizeLoadedState(stripLinkExtras(save.state));
   state.phase = state.phase === 'title' ? 'idle' : state.phase;
   stopTimer();
@@ -722,6 +734,7 @@ export async function resumeLinkedSeason(classKey: string, week: number): Promis
     classKey,
     week,
     groupIdByTeamId: linkIds,
+    sheetBaseByTeamId: sheetBase,
   });
   useGameStore.setState({
     state,
@@ -730,6 +743,9 @@ export async function resumeLinkedSeason(classKey: string, week: number): Promis
     timer: null,
   });
   persist(state, []);
+  // دمج «القاعدة + الفرق»: قراءة الكشف أولًا، تطبيق فرق المعلم على كل فريق،
+  // ثم رفع الإجمالي المدموج — قبل أن يدهس أي رفع لاحق إضافات ما قبل الدخول
+  void flushLinkedNow(state);
   return true;
 }
 
