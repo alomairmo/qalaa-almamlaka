@@ -1,0 +1,1 @@
+function M(a,n,t,c){const m=Math.min(1,Math.max(0,c)),x=Math.min(1,n+t*m);return Math.max(a,n,x)}function h(a,n,t,c){const m=Math.max(1e-6,1-t),x=Math.min(1,Math.max(0,(c-t)/m));return{x:a.x+(n.x-a.x)*x,z:a.z+(n.z-a.z)*x}}export{h as convoyVisualPoint,M as convoyVisualProgress};

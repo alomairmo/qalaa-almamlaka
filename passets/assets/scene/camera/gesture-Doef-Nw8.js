@@ -1,0 +1,1 @@
+const i=.005,o=.0035;function r(n,t,E,e){return{yaw:n+E*.005,power:Math.min(1,Math.max(0,t-e*.0035))}}function a(n){const t=Math.PI*2;let E=n%t;return E>Math.PI&&(E-=t),E<=-Math.PI&&(E+=t),E}function P(n,t){return t+a(n-t)}export{o as GESTURE_POWER_SPEED,i as GESTURE_YAW_SPEED,r as applyGestureAim,P as nearestEquivalentAngle,a as normalizeAngle};
