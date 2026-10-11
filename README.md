@@ -2,6 +2,12 @@
 
 لعبة لوحية استراتيجية تعليمية تُعرض على السبورات الذكية في الفصول الدراسية — فرق تبني قلاعها وتجّند الجنود وتتقاذف بالمنجنيق، وتتزامن نقودها الذهبية لحظيًا مع كشف درجات المجموعات في قاعدة بيانات Supabase.
 
+## اللعب مباشرة (GitHub Pages)
+
+**https://alomairmo.github.io/qalaa-almamlaka/** — نسخة جاهزة بلا تثبيت:
+ملفات التطبيق المبنية في `passets/` + `index.html` الجذري، والمكتبات الكبيرة
+(React/Three.js…) من CDN عبر importmap، والصور من Supabase Storage.
+
 ## التقنيات
 
 - React 19 + TypeScript + Vite
@@ -22,8 +28,12 @@ npm run dev
 ## البناء للإنتاج
 
 ```bash
-npm run build
+npm run build          # نسخة الاستضافة الرئيسية (dist/)
+npm run build:pages    # تحديث نسخة GitHub Pages: يبني passets/ ويولّد index.html الجذري
 ```
+
+بعد `build:pages` ادفع `passets/` و`index.html` الجذري إلى المستودع فيُحدَّث
+موقع Pages تلقائيًا (دقيقة أو دقيقتان).
 
 ## الاختبارات
 
