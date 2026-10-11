@@ -1,0 +1,81 @@
+.\[\&\>\[role\=checkbox\]\]\:translate-y-\[2px\]>[role=checkbox]{--tw-translate-y: 2px;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.\[\&\>a\:hover\]\:text-primary>a:hover{color:hsl(var(--primary))}
+.\[\&\>a\]\:underline>a{text-decoration-line:underline}
+.\[\&\>a\]\:underline-offset-4>a{text-underline-offset:4px}
+.\[\&\>button\]\:hidden>button{display:none}
+.\[\&\>input\]\:flex-1>input{flex:1 1 0%}
+.has-\[\>\[data-align\=block-end\]\]\:\[\&\>input\]\:pt-3>input:has(>[data-align=block-end]){padding-top:.75rem}
+.has-\[\>\[data-align\=block-start\]\]\:\[\&\>input\]\:pb-3>input:has(>[data-align=block-start]){padding-bottom:.75rem}
+.has-\[\>\[data-align\=inline-end\]\]\:\[\&\>input\]\:pr-2>input:has(>[data-align=inline-end]){padding-right:.5rem}
+.has-\[\>\[data-align\=inline-start\]\]\:\[\&\>input\]\:pl-2>input:has(>[data-align=inline-start]){padding-left:.5rem}
+.\[\&\>kbd\]\:rounded-\[calc\(var\(--radius\)-5px\)\]>kbd{border-radius:calc(var(--radius) - 5px)}
+.\[\&\>span\:last-child\]\:truncate>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.\[\&\>span\]\:text-xs>span{font-size:.75rem;line-height:1rem}
+.\[\&\>span\]\:opacity-70>span{opacity:.7}
+.\[\&\>svg\:not\(\[class\*\=\'size-\'\]\)\]\:size-3\.5>svg:not([class*=size-]){width:.875rem;height:.875rem}
+.\[\&\>svg\:not\(\[class\*\=\'size-\'\]\)\]\:size-4>svg:not([class*=size-]){width:1rem;height:1rem}
+.\[\&\>svg\]\:pointer-events-none>svg{pointer-events:none}
+.\[\&\>svg\]\:size-3>svg{width:.75rem;height:.75rem}
+.\[\&\>svg\]\:size-3\.5>svg{width:.875rem;height:.875rem}
+.\[\&\>svg\]\:size-4>svg{width:1rem;height:1rem}
+.\[\&\>svg\]\:h-2\.5>svg{height:.625rem}
+.\[\&\>svg\]\:h-3>svg{height:.75rem}
+.\[\&\>svg\]\:w-2\.5>svg{width:.625rem}
+.\[\&\>svg\]\:w-3>svg{width:.75rem}
+.\[\&\>svg\]\:shrink-0>svg{flex-shrink:0}
+.\[\&\>svg\]\:translate-y-0\.5>svg{--tw-translate-y: .125rem;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.\[\&\>svg\]\:text-current>svg{color:currentColor}
+.\[\&\>svg\]\:text-muted-foreground>svg{color:hsl(var(--muted-foreground))}
+.\[\&\>svg\]\:text-sidebar-accent-foreground>svg{color:hsl(var(--sidebar-accent-foreground))}
+.\[\&\>tr\]\:last\:border-b-0:last-child>tr{border-bottom-width:0px}
+.\[\&\[data-panel-group-direction\=vertical\]\>div\]\:rotate-90[data-panel-group-direction=vertical]>div{--tw-rotate: 90deg;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.\[\&\[data-state\=open\]\>svg\]\:rotate-180[data-state=open]>svg{--tw-rotate: 180deg;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.\[\&_\.recharts-cartesian-axis-tick_text\]\:fill-muted-foreground .recharts-cartesian-axis-tick text{fill:hsl(var(--muted-foreground))}
+.\[\&_\.recharts-cartesian-grid_line\[stroke\=\'\#ccc\'\]\]\:stroke-border\/50 .recharts-cartesian-grid line[stroke="#ccc"]{stroke:hsl(var(--border) / .5)}
+.\[\&_\.recharts-curve\.recharts-tooltip-cursor\]\:stroke-border .recharts-curve.recharts-tooltip-cursor{stroke:hsl(var(--border))}
+.\[\&_\.recharts-dot\[stroke\=\'\#fff\'\]\]\:stroke-transparent .recharts-dot[stroke="#fff"]{stroke:transparent}
+.\[\&_\.recharts-polar-grid_\[stroke\=\'\#ccc\'\]\]\:stroke-border .recharts-polar-grid [stroke="#ccc"]{stroke:hsl(var(--border))}
+.\[\&_\.recharts-radial-bar-background-sector\]\:fill-muted .recharts-radial-bar-background-sector,.\[\&_\.recharts-rectangle\.recharts-tooltip-cursor\]\:fill-muted .recharts-rectangle.recharts-tooltip-cursor{fill:hsl(var(--muted))}
+.\[\&_\.recharts-reference-line_\[stroke\=\'\#ccc\'\]\]\:stroke-border .recharts-reference-line [stroke="#ccc"]{stroke:hsl(var(--border))}
+.\[\&_\.recharts-sector\[stroke\=\'\#fff\'\]\]\:stroke-transparent .recharts-sector[stroke="#fff"]{stroke:transparent}
+.\[\&_\[cmdk-group-heading\]\]\:px-2 [cmdk-group-heading]{padding-left:.5rem;padding-right:.5rem}
+.\[\&_\[cmdk-group-heading\]\]\:py-1\.5 [cmdk-group-heading]{padding-top:.375rem;padding-bottom:.375rem}
+.\[\&_\[cmdk-group-heading\]\]\:text-xs [cmdk-group-heading]{font-size:.75rem;line-height:1rem}
+.\[\&_\[cmdk-group-heading\]\]\:font-medium [cmdk-group-heading]{font-weight:500}
+.\[\&_\[cmdk-group-heading\]\]\:text-muted-foreground [cmdk-group-heading]{color:hsl(var(--muted-foreground))}
+.\[\&_\[cmdk-group\]\:not\(\[hidden\]\)_\~\[cmdk-group\]\]\:pt-0 [cmdk-group]:not([hidden])~[cmdk-group]{padding-top:0}
+.\[\&_\[cmdk-group\]\]\:px-2 [cmdk-group]{padding-left:.5rem;padding-right:.5rem}
+.\[\&_\[cmdk-input-wrapper\]_svg\]\:h-5 [cmdk-input-wrapper] svg{height:1.25rem}
+.\[\&_\[cmdk-input-wrapper\]_svg\]\:w-5 [cmdk-input-wrapper] svg{width:1.25rem}
+.\[\&_\[cmdk-input\]\]\:h-12 [cmdk-input]{height:3rem}
+.\[\&_\[cmdk-item\]\]\:px-2 [cmdk-item]{padding-left:.5rem;padding-right:.5rem}
+.\[\&_\[cmdk-item\]\]\:py-3 [cmdk-item]{padding-top:.75rem;padding-bottom:.75rem}
+.\[\&_\[cmdk-item\]_svg\]\:h-5 [cmdk-item] svg{height:1.25rem}
+.\[\&_\[cmdk-item\]_svg\]\:w-5 [cmdk-item] svg{width:1.25rem}
+.\[\&_img\]\:size-full img{width:100%;height:100%}
+.\[\&_img\]\:object-cover img{-o-object-fit:cover;object-fit:cover}
+.\[\&_p\]\:leading-relaxed p{line-height:1.625}
+.\[\&_svg\:not\(\[class\*\=\'size-\'\]\)\]\:size-3 svg:not([class*=size-]){width:.75rem;height:.75rem}
+.\[\&_svg\:not\(\[class\*\=\'size-\'\]\)\]\:size-4 svg:not([class*=size-]){width:1rem;height:1rem}
+.\[\&_svg\:not\(\[class\*\=\'size-\'\]\)\]\:size-6 svg:not([class*=size-]){width:1.5rem;height:1.5rem}
+.\[\&_svg\:not\(\[class\*\=\'text-\'\]\)\]\:text-muted-foreground svg:not([class*=text-]){color:hsl(var(--muted-foreground))}
+.\[\&_svg\]\:pointer-events-none svg{pointer-events:none}
+.\[\&_svg\]\:shrink-0 svg{flex-shrink:0}
+.\[\&_tr\:last-child\]\:border-0 tr:last-child{border-width:0px}
+.\[\&_tr\]\:border-b tr{border-bottom-width:1px}
+[data-side=left][data-collapsible=offcanvas] .\[\[data-side\=left\]\[data-collapsible\=offcanvas\]_\&\]\:-right-2{right:-.5rem}
+[data-side=left][data-state=collapsed] .\[\[data-side\=left\]\[data-state\=collapsed\]_\&\]\:cursor-e-resize{cursor:e-resize}
+[data-side=right][data-collapsible=offcanvas] .\[\[data-side\=right\]\[data-collapsible\=offcanvas\]_\&\]\:-left-2{left:-.5rem}
+[data-side=right][data-state=collapsed] .\[\[data-side\=right\]\[data-state\=collapsed\]_\&\]\:cursor-w-resize{cursor:w-resize}
+[data-slot=card-content] .\[\[data-slot\=card-content\]_\&\]\:bg-transparent,[data-slot=popover-content] .\[\[data-slot\=popover-content\]_\&\]\:bg-transparent{background-color:transparent}
+[data-slot=tooltip-content] .\[\[data-slot\=tooltip-content\]_\&\]\:bg-background\/20{background-color:hsl(var(--background) / .2)}
+[data-slot=tooltip-content] .\[\[data-slot\=tooltip-content\]_\&\]\:text-background{color:hsl(var(--background))}
+[data-slot=tooltip-content] .dark\:\[\[data-slot\=tooltip-content\]_\&\]\:bg-background\/10:is(.dark *){background-color:hsl(var(--background) / .1)}
+[data-variant=legend]+.\[\[data-variant\=legend\]\+\&\]\:-mt-1\.5{margin-top:-.375rem}
+a.\[a\&\]\:hover\:bg-accent:hover{background-color:hsl(var(--accent))}
+a.\[a\&\]\:hover\:bg-destructive\/90:hover{background-color:hsl(var(--destructive) / .9)}
+a.\[a\&\]\:hover\:bg-primary\/90:hover{background-color:hsl(var(--primary) / .9)}
+a.\[a\&\]\:hover\:bg-secondary\/90:hover{background-color:hsl(var(--secondary) / .9)}
+a.\[a\&\]\:hover\:text-accent-foreground:hover{color:hsl(var(--accent-foreground))}
+
+}
