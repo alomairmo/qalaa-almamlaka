@@ -10,9 +10,10 @@
  * ترتيب الطبقات يتبع design.md §4: canvas 0 ← HUD 20-25 ← أحداث 30
  * ← نوافذ 40 ← توتوريال 50 ← إعدادات 60 ← توست 80.
  */
-import { Component, type ReactNode } from 'react';
+import { Component, useEffect, type ReactNode } from 'react';
 import { useGameStore } from '@/engine';
 import { GameCanvas, requestSceneRemount, useSceneBridge } from '@/scene';
+import { preloadSceneTextures } from '@/scene/preload';
 import {
   GameHud,
   QuestionModal,
@@ -192,6 +193,12 @@ export default function App() {
   const phase = useGameStore((s) => s.state.phase);
   // عدّاد إعادة تركيب المشهد (زر الاستعادة اليدوي + طبقة الشاشة البنية)
   const sceneNonce = useSceneBridge((s) => s.sceneNonce);
+
+  // تسخين خامات المشهد منذ شاشة العنوان — أول تركيب للمشهد لا يعلّق أبدًا
+  // (تعليق أولي بلا نهاية = شاشة بنية صامتة، خصوصًا مع خامات CDN خارجية).
+  useEffect(() => {
+    preloadSceneTextures();
+  }, []);
 
   if (phase === 'title') {
     return <TitleScreen />;

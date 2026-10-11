@@ -144,8 +144,6 @@ function SceneContent() {
       <CameraRig />
       <CatapultRig />
       <EventPlayer />
-      {/* كاشف الشاشة البنية — يتولى الرسم أثناء اللعب ويقرأ عيّنات بكسلات */}
-      <BrownScreenWatchdog />
     </group>
   );
 }
@@ -164,6 +162,14 @@ export default function GameCanvas() {
         <Suspense fallback={null}>
           <SceneContent />
         </Suspense>
+        {/*
+          كاشف الشاشة البنية خارج Suspense عمدًا: لو علق المشهد في الانتظار
+          (تحميل خامات عبر CDN لم يُكمل أبدًا) لا يُركَّب أي مكوّن داخل
+          الحدود — فيبقى الكاشف حيًّا، يرسم الإطار الفارغ بنفسه، يرصد
+          «شفاف/بنية» ويطلب remount تلقائيًا (المحاولة الثانية تجد الخامات
+          مخزّنة فيُقلع المشهد فورًا).
+        */}
+        <BrownScreenWatchdog />
       </Canvas>
     </div>
   );

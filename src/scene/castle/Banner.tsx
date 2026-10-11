@@ -7,9 +7,11 @@ import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import { usePrefersReducedMotion } from '../palette';
 
+import { assetUrl } from '@/asset-base';
+
 export default function Banner({ teamIndex, height = 2.6 }: { teamIndex: number; height?: number }) {
   const n = Math.min(4, Math.max(1, teamIndex + 1));
-  const tex = useTexture(`./banner-team-${n}.svg`);
+  const tex = useTexture(assetUrl(`./banner-team-${n}.svg`));
   const mesh = useRef<THREE.Mesh>(null!);
   const reduced = usePrefersReducedMotion();
   const width = (height * 2) / 3;

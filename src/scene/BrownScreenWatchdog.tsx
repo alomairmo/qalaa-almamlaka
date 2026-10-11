@@ -22,7 +22,7 @@
 import { useRef } from 'react';
 import { useFrame, type RootState } from '@react-three/fiber';
 import { useGameStore } from '@/engine';
-import { reportBrownScreen } from './bridge';
+import { reportBrownScreen, requestSceneRemount } from './bridge';
 import {
   analyzeSamples,
   sampleGridPoints,
@@ -60,6 +60,15 @@ function readFrameSamples(state: RootState): PixelSample[] | null {
   }
 }
 
+/**
+ * عدّاد الاستعادة التلقائية لكل نوبة شاشة بنية متواصلة (مستوى الوحدة —
+ * يبقى عبر remounts المتعاقبة). يُصفَّر عند أول إطار سليم. السقف يمنع
+ * حلقة remount لا نهائية إن كان العطل بنيويًا: بعد استنفاده يُعرض زر
+ * الاستعادة اليدوي (reportBrownScreen) كملاذ أخير.
+ */
+const AUTO_REMOUNT_MAX = 3;
+let autoRemounts = 0;
+
 /** مُجري العيّنة — يُركَّب فقط أثناء اللعب الفعلي (بوابة BrownScreenWatchdog) */
 function FrameSampler() {
   // bornAt=0 ⇒ أول إطار يهيّئ مهلة السماح (تفادي performance.now أثناء render)
@@ -84,9 +93,20 @@ function FrameSampler() {
     if (!samples) return; // لا حكم بلا قراءة
     if (analyzeSamples(samples).brown) {
       c.streak += 1;
-      if (c.streak >= BROWN_REQUIRED_STREAK) reportBrownScreen();
+      if (c.streak >= BROWN_REQUIRED_STREAK) {
+        if (autoRemounts < AUTO_REMOUNT_MAX) {
+          // شفاء ذاتي: remount فوري — الشائع أن الخامات علقت في أول تركيب
+          // والمحاولة التالية تجدها مخزّنة فيُقلع المشهد فورًا.
+          autoRemounts += 1;
+          console.warn(`[scene] شاشة بنية — استعادة تلقائية ${autoRemounts}/${AUTO_REMOUNT_MAX}`);
+          requestSceneRemount();
+        } else {
+          reportBrownScreen(); // استنفدنا التلقائي — زر يدوي للمستخدم
+        }
+      }
     } else {
       c.streak = 0;
+      autoRemounts = 0; // إطار سليم — انتهت النوبة
     }
   }, 1);
 

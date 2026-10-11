@@ -100,7 +100,7 @@
     @apply bg-wood-900 text-foreground;
     font-family: "Tajawal", sans-serif;
     /* مؤشر السيف النحاسي العام — design.md §5 */
-    cursor: url("/cursor-scimitar.svg") 4 4, auto;
+    cursor: var(--asset-cursor, url("/cursor-scimitar.svg")) 4 4, auto;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -111,7 +111,7 @@
   textarea,
   select,
   label {
-    cursor: url("/cursor-scimitar.svg") 4 4, pointer;
+    cursor: var(--asset-cursor, url("/cursor-scimitar.svg")) 4 4, pointer;
   }
 
   /* حلقة تركيز ذهبية لكل العناصر التفاعلية — design.md §13 */
@@ -170,12 +170,12 @@
   /* لوح الرق (parchment) مع نسيج خفيف — design.md §2.3 */
   .parchment-panel {
     background-color: var(--parchment);
-    background-image: url("/parchment-texture.png");
+    background-image: var(--asset-parchment, url("/parchment-texture.png"));
     background-blend-mode: multiply;
   }
   /* شريط الزليج المتكرر */
   .zellige-strip {
-    background-image: url("/zellige-border.svg");
+    background-image: var(--asset-zellige, url("/zellige-border.svg"));
     background-repeat: repeat-x;
     background-size: 96px 96px;
   }

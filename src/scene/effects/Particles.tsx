@@ -13,6 +13,8 @@ import { useTexture } from '@react-three/drei';
 import { usePrefersReducedMotion } from '../palette';
 import { CAP_PER_SYSTEM, smokePool, sparklePool, type Particle } from './particle-pool';
 
+import { assetUrl } from '@/asset-base';
+
 const VERT = /* glsl */ `
 attribute float aSize;
 attribute float aAlpha;
@@ -100,7 +102,7 @@ function ParticleSystem({ texture, pool }: { texture: THREE.Texture; pool: Parti
 }
 
 export default function Particles() {
-  const [sparkleTex, smokeTex] = useTexture(['./particle-coin-sparkle.png', './particle-smoke-puff.png']);
+  const [sparkleTex, smokeTex] = useTexture([assetUrl('/particle-coin-sparkle.png'), assetUrl('/particle-smoke-puff.png')]);
   return (
     <group>
       <ParticleSystem texture={smokeTex} pool={smokePool} />
