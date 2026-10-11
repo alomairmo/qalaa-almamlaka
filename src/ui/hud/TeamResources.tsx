@@ -1,111 +1,111 @@
 /**
- * TeamResources — لوحة الموارد التفصيلية لصاحب الدور (game-map.md §3).
- * بطاقة واحدة في العمود الأيسر تفصّل الذهب داخل/خارج مع أيقونات، الحجارة،
- * الجنود (عدد + وسامات الرتب)، الطوابق، وحالة القلعة (صحة القاعدة والطوابق).
+ * TeamResources — جسم لوحة الموارد التفصيلية لأي مجموعة (مستخرج من TurnInfoPanel
+ * ليُعاد استخدامه): الذهب (المجموع بدون الطريق + داخل/خارج/في الطريق)، الحجارة،
+ * والجنود لكل رتبة (خبير/جندي/مبتدئ: المجموع + داخل/خارج/طريق).
+ * القاعدة: كل رقم خارج القلعة (خارج/في الطريق) يُعرض بالأحمر.
+ * يُستخدم في لوحة الدور الجانبية وفي مربع التحويم تحت بطاقات الشريط العلوي.
  */
-import { AnimatePresence, motion } from 'framer-motion';
 import { useGameStore } from '@/engine';
-import { TEAM_COLORS } from '@/contracts/defaults';
-import { useUiStore } from '../ui-store';
+import type { Rank, Soldier, Team } from '@/contracts/types';
+import { RANK_LABELS } from '@/contracts/defaults';
 import { RankBadge } from '../primitives/widgets';
 
 import { assetUrl } from '@/asset-base';
 
-/** سطر مورد بأيقونة وقيمة كبيرة واضحة */
-function ResourceRow({
-  icon,
-  label,
-  value,
-  sub,
-}: {
-  icon: string;
-  label: string;
-  value: React.ReactNode;
-  sub?: React.ReactNode;
-}) {
+/** ترتيب عرض الرتب: الأعلى أولًا */
+const RANKS_SHOWN: Rank[] = ['expert', 'soldier', 'novice'];
+
+function rankSplit(soldiers: Soldier[], rank: Rank) {
+  const of = soldiers.filter((s) => s.rank === rank);
+  return {
+    total: of.length,
+    inside: of.filter((s) => s.state === 'inside').length,
+    outside: of.filter((s) => s.state === 'outside').length,
+    convoy: of.filter((s) => s.state === 'convoy').length,
+  };
+}
+
+function SectionTitle({ icon, label, value }: { icon: string; label: string; value: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-2.5">
-      <img src={icon} alt="" className="w-[30px] h-[30px] shrink-0" />
-      <span className="font-body font-bold text-[16px] text-ink/80">{label}</span>
-      <span className="ms-auto font-heading font-black text-[22px] tabular-nums text-ink flex items-center gap-2">
-        {value}
+    <div className="flex items-center justify-between gap-2 border-b border-parchment/20 pb-1">
+      <span className="flex items-center gap-1.5 font-heading font-extrabold text-[15px] text-gold-300">
+        <img src={icon} alt="" className="w-[18px] h-[18px]" />
+        {label}
       </span>
-      {sub && <div className="basis-full text-[13px] text-ink/60 -mt-1">{sub}</div>}
+      <span className="font-heading font-black text-[17px] text-parchment tabular-nums">{value}</span>
     </div>
   );
 }
 
-export function TeamResources() {
-  const state = useGameStore((s) => s.state);
-  const stickyCard = useUiStore((s) => s.stickyCard);
-  const phase = state.phase;
-  const team = state.teams[state.turnIndex];
-  // تُعرض فقط في أطوار اللعب الفعلية (idle/action)، وتختفي خلف البطاقات الثابتة
-  if (!team || (phase !== 'idle' && phase !== 'action')) return null;
-  if (stickyCard) return null;
+/** صف فرعي: التسمية + القيمة (حمراء عندما يكون الرقم خارج القلعة) */
+function SubRow({ label, value, danger = false }: { label: string; value: React.ReactNode; danger?: boolean }) {
+  return (
+    <div className="flex items-center justify-between gap-2 ps-3">
+      <span className="font-body text-[13px] text-parchment/70">{label}</span>
+      <span
+        className={`font-heading font-bold text-[14px] tabular-nums ${danger ? 'text-danger-500' : 'text-parchment'}`}
+        style={danger ? { textShadow: '0 0 6px rgba(11,62,67,.9)' } : undefined}
+      >
+        {value}
+      </span>
+    </div>
+  );
+}
 
-  const color = TEAM_COLORS[team.color];
-  const ranks = { novice: 0, soldier: 0, expert: 0 };
-  for (const s of team.soldiers) ranks[s.rank] += 1;
-  const castleHpPct = Math.round((team.castle.baseHp / team.castle.baseMaxHp) * 100);
+/** كل معلومات مجموعة: ذهب + حجارة + جنود بتقسيم الرتب — محتوى بلا قشرة تموضع */
+export function TeamResources({ team }: { team: Team }) {
+  const state = useGameStore((s) => s.state);
+  // القوافل العائدة لهذه المجموعة (ذهب في الطريق + جنود في الطريق)
+  const ownConvoys = state.convoys.filter((c) => c.teamId === team.id);
+  const goldOnRoad = ownConvoys.reduce((a, c) => a + c.goldCarried, 0);
+  const goldTotal = team.goldInside + team.goldOutside; // باستثناء الموجود في الطريق
 
   return (
-    <AnimatePresence>
-      <motion.aside
-        className="fixed start-3 top-[104px] z-20 w-[300px] parchment-panel rounded-panel border-[3px] border-wood-700 p-4 shadow-card"
-        style={{ boxShadow: `inset 0 0 0 2px ${color}, 0 4px 12px rgba(43,33,24,.25)` }}
-        initial={{ x: -40, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        exit={{ x: -40, opacity: 0 }}
-      >
-        <h3 className="font-heading font-extrabold text-[19px] mb-3" style={{ color }}>
-          موارد {team.name}
-        </h3>
-        <div className="flex flex-col gap-2.5">
-          <ResourceRow
-            icon={assetUrl('/icon-coin-gold.svg')}
-            label="الذهب"
-            value={
-              <>
-                <span title="داخل القلعة (آمن)">🏰 {team.goldInside}</span>
-                <span className="text-ink/40">|</span>
-                <span title="خارج القلعة (للإنفاق)" className="text-gold-600">⛺ {team.goldOutside}</span>
-              </>
-            }
-            sub="داخل آمن من السرقة · خارج قابل للإنفاق والسرقة"
-          />
-          <ResourceRow icon={assetUrl('/icon-stone.svg')} label="الحجارة" value={team.stonesOutside} />
-          <ResourceRow
-            icon={assetUrl('/icon-soldier.svg')}
-            label="الجنود"
-            value={
-              <>
-                {team.soldiers.length}
-                <span className="flex gap-1">
-                  {ranks.novice > 0 && <RankBadge rank="novice" size={22} />}
-                  {ranks.soldier > 0 && <RankBadge rank="soldier" size={22} />}
-                  {ranks.expert > 0 && <RankBadge rank="expert" size={22} />}
+    <div className="flex flex-col gap-2.5">
+      <div className="font-heading font-extrabold text-[16px] text-gold-300 text-center border-b border-parchment/20 pb-1.5">
+        {team.name}
+      </div>
+
+      {/* الذهب */}
+      <div className="flex flex-col gap-1">
+        <SectionTitle icon={assetUrl("/icon-coin-gold.svg")} label="الذهب" value={goldTotal} />
+        <SubRow label="داخل القلعة" value={team.goldInside} />
+        <SubRow label="خارج القلعة" value={team.goldOutside} danger />
+        <SubRow label="في الطريق (قوافل)" value={goldOnRoad} danger />
+      </div>
+
+      {/* الحجارة */}
+      <div className="flex flex-col gap-1">
+        <SectionTitle icon={assetUrl("/icon-stone.svg")} label="الحجارة" value={team.stonesOutside} />
+      </div>
+
+      {/* الجنود: المجموع ثم كل رتبة بتقسيم داخل/خارج/طريق */}
+      <div className="flex flex-col gap-1.5">
+        <SectionTitle icon={assetUrl("/icon-soldier.svg")} label="الجنود" value={team.soldiers.length} />
+        {RANKS_SHOWN.map((r) => {
+          const split = rankSplit(team.soldiers, r);
+          if (split.total === 0) return null;
+          return (
+            <div key={r} className="flex flex-col gap-0.5 rounded-lg bg-wood-900/25 px-2 py-1.5">
+              <div className="flex items-center justify-between gap-2">
+                <span className="flex items-center gap-1.5 font-heading font-bold text-[14px] text-parchment">
+                  <RankBadge rank={r} size={20} />
+                  {RANK_LABELS[r]}
                 </span>
-              </>
-            }
-          />
-          <ResourceRow icon={assetUrl('/icon-build-floor.svg')} label="الطوابق" value={team.castle.floors.length} />
-          <ResourceRow
-            icon={assetUrl('/icon-repair-hammer.svg')}
-            label="صحة القاعدة"
-            value={
-              <span className={castleHpPct < 50 ? 'text-danger-500' : ''}>
-                {team.castle.baseHp}/{team.castle.baseMaxHp}
-              </span>
-            }
-            sub={
-              team.castle.floors.some((f) => f.hp < f.maxHp)
-                ? '⚠ يوجد طابق مصاب — استخدموا «إصلاح ضرر»'
-                : undefined
-            }
-          />
-        </div>
-      </motion.aside>
-    </AnimatePresence>
+                <span className="font-heading font-black text-[15px] text-parchment tabular-nums">
+                  {split.total}
+                </span>
+              </div>
+              <SubRow label="داخل" value={split.inside} />
+              <SubRow label="خارج" value={split.outside} danger />
+              <SubRow label="في الطريق" value={split.convoy} danger />
+            </div>
+          );
+        })}
+        {team.soldiers.length === 0 && (
+          <div className="text-parchment/50 text-[13px] text-center">لا جنود بعد — جنّدوا!</div>
+        )}
+      </div>
+    </div>
   );
 }
