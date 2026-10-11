@@ -22,6 +22,8 @@ import { TopBar } from './TopBar';
 import { SideActions } from './SideActions';
 import { TurnInfoPanel } from './TurnInfoPanel';
 
+import { assetUrl } from '@/asset-base';
+
 const GAME_PHASES = ['idle', 'question', 'action', 'catapult', 'army', 'event', 'tutorial'];
 
 // ─────────────────────────────────────────────
@@ -41,7 +43,7 @@ function TopLeftCluster() {
           className="w-[40px] h-[40px] rounded-full hud-glass flex items-center justify-center"
           whileTap={{ scale: 0.85, rotate: 15 }}
         >
-          <img src={sound.muted ? '/icon-sound-off.svg' : '/icon-sound-on.svg'} alt="" className="w-[24px] h-[24px]" />
+          <img src={sound.muted ? assetUrl('/icon-sound-off.svg') : assetUrl('/icon-sound-on.svg')} alt="" className="w-[24px] h-[24px]" />
         </motion.button>
         <button
           type="button"
@@ -375,7 +377,7 @@ function CatapultHud() {
       </div>
       {/* الشعيرات */}
       <img
-        src="/reticle-catapult.svg"
+        src={assetUrl("/reticle-catapult.svg")}
         alt=""
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[96px] h-[96px] opacity-90"
       />

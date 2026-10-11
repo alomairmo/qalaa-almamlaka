@@ -12,6 +12,8 @@ import { RANK_LABELS } from '@/contracts/defaults';
 import { useSound } from '@/audio';
 import { useUiStore } from '../ui-store';
 
+import { assetUrl } from '@/asset-base';
+
 // ─────────────────────────────────────────────
 // CircularTimer — قرص يتناقص + رقم كبير + احمرار آخر 10 ثوانٍ
 // ─────────────────────────────────────────────
@@ -146,9 +148,9 @@ export function SyncIndicator() {
 // RankBadge — ميدالية الرتبة النجمية + نقاط الصحة
 // ─────────────────────────────────────────────
 const RANK_ICON: Record<Rank, string> = {
-  novice: '/rank-novice.svg',
-  soldier: '/rank-soldier.svg',
-  expert: '/rank-expert.svg',
+  novice: assetUrl('/rank-novice.svg'),
+  soldier: assetUrl('/rank-soldier.svg'),
+  expert: assetUrl('/rank-expert.svg'),
 };
 
 export function RankBadge({
