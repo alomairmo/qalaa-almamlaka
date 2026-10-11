@@ -1,0 +1,1 @@
+const s="https://lazyikoawttfcflpdixs.supabase.co/storage/v1/object/public/game-assets";function a(e){const t=e.replace(/^\.?\//,"");return`${s.replace(/\/$/,"")}/${t}`}export{s as ASSET_BASE,a as assetUrl};
