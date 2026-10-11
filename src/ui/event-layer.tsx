@@ -45,6 +45,8 @@ import { useUiStore } from './ui-store';
 import { ReportCard, WoodPanel } from './primitives/panels';
 import { DamageFloatHost, RankBadge, SkipButton, ToastHost } from './primitives/widgets';
 
+import { assetUrl } from '@/asset-base';
+
 interface Plan {
   /** مدة العرض بالمللي ثانية (0 = ack فوري) */
   ms: number;
@@ -354,7 +356,7 @@ function RecruitCard({ ev, onConfirm }: { ev: SoldierRecruitedEvent; onConfirm: 
         </div>
         <div className="flex items-center justify-between rounded-xl border-2 border-wood-700/30 bg-parchment/70 px-4 py-2">
           <span className="font-bold flex items-center gap-1.5">
-            <img src="/icon-coin-gold.svg" alt="" className="w-[22px] h-[22px]" /> حمل الذهب
+            <img src={assetUrl("/icon-coin-gold.svg")} alt="" className="w-[22px] h-[22px]" /> حمل الذهب
           </span>
           <b className="font-heading tabular-nums text-gold-600">
             من {powMin} إلى {powMax} ذهبًا
@@ -529,7 +531,7 @@ function BattleResultCard({
         {lootGold > 0 && (
           <BattleRow label={
             <span className="flex items-center gap-1.5">
-              <img src="/icon-coin-gold.svg" alt="" className="w-[22px] h-[22px]" /> الغنيمة المحمولة
+              <img src={assetUrl("/icon-coin-gold.svg")} alt="" className="w-[22px] h-[22px]" /> الغنيمة المحمولة
             </span>
           }>
             <span className="text-gold-600">{lootGold} ذهبًا في قافلة العودة</span>
@@ -677,7 +679,7 @@ function LootCard({ ev, onConfirm }: { ev: ConvoyDepartedEvent; onConfirm: () =>
       <div className="flex flex-col gap-2.5 font-body text-[16px] text-ink text-start mt-4">
         <BattleRow label={
           <span className="flex items-center gap-1.5">
-            <img src="/icon-coin-gold.svg" alt="" className="w-[22px] h-[22px]" /> أُخذ (في القافلة)
+            <img src={assetUrl("/icon-coin-gold.svg")} alt="" className="w-[22px] h-[22px]" /> أُخذ (في القافلة)
           </span>
         }>
           <span className="text-gold-600">{convoy.goldCarried} ذهبًا</span>
