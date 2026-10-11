@@ -10,12 +10,14 @@ import { TEAM_COLORS } from '@/contracts/defaults';
 import GameButton from '@/components/game/GameButton';
 import { useSound } from '@/audio';
 
+import { assetUrl } from '@/asset-base';
+
 type Field = keyof TeamAdjustment;
 const FIELDS: Array<{ key: Field; label: string; icon: string }> = [
-  { key: 'gold', label: 'ذهب', icon: '/icon-coin-gold.svg' },
-  { key: 'stones', label: 'حجارة', icon: '/icon-stone.svg' },
-  { key: 'soldiers', label: 'جنود', icon: '/icon-soldier.svg' },
-  { key: 'floors', label: 'طوابق', icon: '/icon-build-floor.svg' },
+  { key: 'gold', label: 'ذهب', icon: assetUrl('/icon-coin-gold.svg') },
+  { key: 'stones', label: 'حجارة', icon: assetUrl('/icon-stone.svg') },
+  { key: 'soldiers', label: 'جنود', icon: assetUrl('/icon-soldier.svg') },
+  { key: 'floors', label: 'طوابق', icon: assetUrl('/icon-build-floor.svg') },
 ];
 
 function TeamAdjustCard({ index }: { index: number }) {
@@ -82,7 +84,7 @@ function TeamAdjustCard({ index }: { index: number }) {
       transition={{ delay: index * 0.07 }}
     >
       <div className="flex items-center gap-3 mb-4">
-        <img src={`/banner-team-${Math.min(index + 1, 4)}.svg`} alt="" className="w-[30px] h-[45px]" />
+        <img src={assetUrl(`/banner-team-${Math.min(index + 1, 4)}.svg`)} alt="" className="w-[30px] h-[45px]" />
         <h3 className="font-heading font-extrabold text-[22px]" style={{ color }}>
           {team.name}
         </h3>

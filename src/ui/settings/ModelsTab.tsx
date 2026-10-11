@@ -12,6 +12,8 @@ import { useSound } from '@/audio';
 import { useUiStore } from '../ui-store';
 import { NumberStepper, SliderRow } from '../primitives/widgets';
 
+import { assetUrl } from '@/asset-base';
+
 interface SlotDef {
   key: string;
   label: string;
@@ -152,7 +154,7 @@ export default function ModelsTab() {
 
       {models.length === 0 && (
         <div className="flex flex-col items-center gap-3 py-6">
-          <img src="/empty-models-illustration.svg" alt="" className="w-[300px] opacity-90" />
+          <img src={assetUrl("/empty-models-illustration.svg")} alt="" className="w-[300px] opacity-90" />
           <p className="font-body text-[18px] text-ink/70">
             كل العناصر تستخدم المجسمات الافتراضية المدمجة — ارفعوا مجسماتكم الخاصة متى شئتم
           </p>
