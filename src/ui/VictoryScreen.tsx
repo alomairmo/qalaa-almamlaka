@@ -13,6 +13,8 @@ import { useSound } from '@/audio';
 import { ConfirmDialog } from './primitives/panels';
 import { goToTitle } from './bridges';
 
+import { assetUrl } from '@/asset-base';
+
 const PODIUM_HEIGHTS = [220, 160, 120, 92, 76, 64]; // ارتفاع درجات المنصة
 
 export default function VictoryScreen() {
@@ -89,14 +91,14 @@ export default function VictoryScreen() {
             transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
           />
 
-          <img src="/logo-game.png" alt="" className="h-[56px] w-auto mb-1 relative" />
+          <img src={assetUrl("/logo-game.png")} alt="" className="h-[56px] w-auto mb-1 relative" />
           <h1 className="font-display text-[64px] text-gold-300 leading-tight relative" style={{ textShadow: '0 4px 18px rgba(46,27,14,.7)' }}>
             🏆 نهاية الموسم
           </h1>
 
           {/* الكأس */}
           <motion.img
-            src="/trophy-week.png"
+            src={assetUrl("/trophy-week.png")}
             alt="كأس الأسبوع"
             className="w-[150px] h-[150px] object-contain relative"
             initial={{ y: 120, opacity: 0 }}
@@ -123,7 +125,7 @@ export default function VictoryScreen() {
                   transition={{ type: 'spring', stiffness: 260, damping: 20 }}
                 >
                   <img
-                    src={`/banner-team-${Math.min(s.index + 1, 4)}.svg`}
+                    src={assetUrl(`/banner-team-${Math.min(s.index + 1, 4)}.svg`)}
                     alt=""
                     className="w-[44px] h-[66px]"
                     style={{ filter: isRevealed ? 'none' : 'grayscale(1)' }}

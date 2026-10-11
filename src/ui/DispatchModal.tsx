@@ -18,6 +18,8 @@ import { resolveGoldPileOwner } from './gold-pile-owner';
 import { ModalShell } from './primitives/panels';
 import { RankBadge } from './primitives/widgets';
 
+import { assetUrl } from '@/asset-base';
+
 const RANKS: Rank[] = RANK_ORDER;
 
 function rankCounts(soldiers: Array<{ rank: Rank }>): Record<Rank, number> {
@@ -60,7 +62,7 @@ function RankLines({ counts }: { counts: Record<Rank, number> }) {
 function GoldAmount({ amount }: { amount: number }) {
   return (
     <div className="flex items-center justify-center gap-3">
-      <img src="/icon-coin-gold.svg" alt="" className="w-[46px] h-[46px]" />
+      <img src={assetUrl("/icon-coin-gold.svg")} alt="" className="w-[46px] h-[46px]" />
       <span className="font-heading font-black text-[36px] tabular-nums text-gold-600">{amount}</span>
       <span className="font-heading font-bold text-[20px] text-ink/70">ذهب</span>
     </div>
@@ -171,7 +173,7 @@ export default function DispatchModal() {
       if (ownerTeam) intelColor = TEAM_COLORS[ownerTeam.color];
       intelBody = (
         <div className="flex flex-col gap-2.5 font-body text-[18px] text-ink items-center text-center">
-          <img src="/icon-coin-gold.svg" alt="" className="w-[72px] h-[72px]" />
+          <img src={assetUrl("/icon-coin-gold.svg")} alt="" className="w-[72px] h-[72px]" />
           <div className="font-heading font-black text-[34px] tabular-nums text-gold-600">{p.amount} ذهب</div>
           {ownerTeam && (
             <div className="inline-flex items-center gap-2 font-heading font-bold text-[19px]">

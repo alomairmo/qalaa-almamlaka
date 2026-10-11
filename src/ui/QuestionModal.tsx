@@ -14,6 +14,8 @@ import { useSound } from '@/audio';
 import { ModalShell } from './primitives/panels';
 import { CircularTimer } from './primitives/widgets';
 
+import { assetUrl } from '@/asset-base';
+
 const OPTION_LETTERS = ['أ', 'ب', 'ج'];
 type Result = 'correct' | 'wrong' | 'timeout';
 
@@ -98,7 +100,7 @@ export default function QuestionModal() {
       <div className="relative flex flex-col min-h-0 max-h-[84vh]" data-highlight="question-card">
         {/* شريط الرأس المقوّس */}
         <div className="relative pt-7 pb-3 px-8 flex items-center justify-center gap-3 border-b-2 border-gold-500/60">
-          <img src={`/banner-team-${Math.min(state.turnIndex + 1, 4)}.svg`} alt="" className="w-[28px] h-[42px]" />
+          <img src={assetUrl(`/banner-team-${Math.min(state.turnIndex + 1, 4)}.svg`)} alt="" className="w-[28px] h-[42px]" />
           <h2 className="font-heading font-extrabold text-[28px]" style={{ color: teamColor }}>
             سؤال {team?.name ?? ''}
           </h2>
@@ -118,7 +120,7 @@ export default function QuestionModal() {
                 {!question && mcq ? (
                   /* حالة بنك فارغ (النمط الاختياري فقط — الشفهي لا يشترط بنكًا §13.2) */
                   <div className="flex flex-col items-center gap-4 py-8 text-center">
-                    <img src="/empty-models-illustration.svg" alt="" className="w-[260px] opacity-90" />
+                    <img src={assetUrl("/empty-models-illustration.svg")} alt="" className="w-[260px] opacity-90" />
                     <p className="font-heading font-bold text-[24px] text-ink">بنك الأسئلة فارغ</p>
                     <p className="font-body text-[18px] text-ink/70 max-w-[520px]">
                       أضيفوا الأسئلة من الإعدادات ← تبويب الإعدادات ← تعديل بنك الأسئلة (كل 4 أسطر = سؤال)
