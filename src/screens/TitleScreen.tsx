@@ -15,6 +15,8 @@ import { useSound } from '@/audio';
 import { readSeasonSummary } from '@/lib/season-info';
 import LinkedSeasonModal from './LinkedSeasonModal';
 
+import { assetUrl } from '@/asset-base';
+
 /** نقطة/نص مؤشر المزامنة الحي في الشريط السفلي */
 const FOOTER_DOT: Record<string, string> = {
   unconfigured: '#F6EED9',
@@ -219,7 +221,7 @@ export default function TitleScreen() {
       key: 'settings',
       label: 'الإعدادات',
       variant: 'teal' as const,
-      icon: <img src="/icon-settings-gear.svg" alt="" className="w-[30px] h-[30px]" />,
+      icon: <img src={assetUrl("/icon-settings-gear.svg")} alt="" className="w-[30px] h-[30px]" />,
       onClick: () => engineApi.openSettings(),
     },
   ];
@@ -229,7 +231,7 @@ export default function TitleScreen() {
       {/* ── القسم 1: خلفية الوادي ── */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url(/title-vista-bg.png)' }}
+        style={{ backgroundImage: `url(${assetUrl('/title-vista-bg.png')})` }}
       />
       {/* تدرّج الساعة الذهبية لوضوح الواجهة */}
       <div
@@ -257,7 +259,7 @@ export default function TitleScreen() {
         >
           <div className="animate-logo-float relative">
             <img
-              src="/logo-game.png"
+              src={assetUrl("/logo-game.png")}
               alt="قلاع المملكة"
               className="w-full drop-shadow-[0_12px_24px_rgba(11,62,67,.45)]"
             />
@@ -300,7 +302,7 @@ export default function TitleScreen() {
             style={{ boxShadow: 'inset 0 0 0 2px var(--gold-500), 0 4px 12px rgba(43,33,24,.25)' }}
           >
             <img
-              src={`/banner-team-${summary.leaderIndex + 1}.svg`}
+              src={assetUrl(`/banner-team-${summary.leaderIndex + 1}.svg`)}
               alt=""
               className="w-[32px] h-[48px]"
             />
@@ -309,7 +311,7 @@ export default function TitleScreen() {
               {' ('}
               <motion.span className="inline-block tabular-nums">{leaderGold}</motion.span>
               {' ذهب '}
-              <img src="/icon-coin-gold.svg" alt="" className="inline w-[22px] h-[22px] -mt-1" />
+              <img src={assetUrl("/icon-coin-gold.svg")} alt="" className="inline w-[22px] h-[22px] -mt-1" />
               {')'}
             </span>
           </div>
@@ -396,7 +398,7 @@ export default function TitleScreen() {
             className="w-[36px] h-[36px] rounded-full hud-glass flex items-center justify-center hover:brightness-125 transition"
           >
             <img
-              src={sound.muted ? '/icon-sound-off.svg' : '/icon-sound-on.svg'}
+              src={sound.muted ? assetUrl('/icon-sound-off.svg') : assetUrl('/icon-sound-on.svg')}
               alt=""
               className="w-[24px] h-[24px]"
             />

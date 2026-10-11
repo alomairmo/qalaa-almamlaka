@@ -10,6 +10,8 @@ import { useGameStore } from '@/engine';
 import { teamCastlePos, roofHeight } from '../layout';
 import { usePrefersReducedMotion } from '../palette';
 
+import { assetUrl } from '@/asset-base';
+
 /** عشوائية حتمية (لا Math.random أثناء الرندر) */
 function mulberry(seed: number) {
   let a = seed >>> 0;
@@ -24,7 +26,7 @@ function mulberry(seed: number) {
 
 /** غيوم billboard تنجرف ببطء وتلتف حول الأفق */
 function Clouds() {
-  const tex = useTexture('./sky-clouds.png');
+  const tex = useTexture(assetUrl('/sky-clouds.png'));
   const reduced = usePrefersReducedMotion();
   const group = useRef<THREE.Group>(null!);
   const clouds = useMemo(() => {

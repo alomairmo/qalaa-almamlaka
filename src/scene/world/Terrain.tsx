@@ -10,12 +10,14 @@ import { useGameStore } from '@/engine';
 import { castlePosition } from '@/engine/logic/geometry';
 import { toonMaterial } from '../palette';
 
+import { assetUrl } from '@/asset-base';
+
 const MAP_SIZE = 120;
 /** مستوى الأرض الكلي: يمتد تحت الجبال المحيطة (حلقة نصف قطرها ~96) وما وراءها */
 const GROUND_SIZE = 260;
 
 function useGrassMaterial(): THREE.MeshToonMaterial {
-  const tex = useTexture('./ground-grass-texture.png');
+  const tex = useTexture(assetUrl('/ground-grass-texture.png'));
   return useMemo(() => {
     const t = tex.clone();
     t.wrapS = t.wrapT = THREE.RepeatWrapping;
@@ -29,7 +31,7 @@ function useGrassMaterial(): THREE.MeshToonMaterial {
 }
 
 function useSandMaterial(rx: number, ry: number): THREE.MeshToonMaterial {
-  const tex = useTexture('./sand-path-texture.png');
+  const tex = useTexture(assetUrl('/sand-path-texture.png'));
   return useMemo(() => {
     const t = tex.clone();
     t.wrapS = t.wrapT = THREE.RepeatWrapping;

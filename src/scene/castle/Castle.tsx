@@ -19,6 +19,8 @@ import Banner from './Banner';
 import CatapultModel from './CatapultModel';
 import { SoldierBust } from '../entities/Soldier';
 
+import { assetUrl } from '@/asset-base';
+
 const BASE_H = 4;
 const FLOOR_H = 3;
 const BASE_W = 9;
@@ -207,7 +209,7 @@ function FloorModule({
 
 function CastleInner({ team }: { team: Team }) {
   const state = useGameStore((s) => s.state);
-  const stoneTex = useTexture('./stone-wall-texture.png');
+  const stoneTex = useTexture(assetUrl('/stone-wall-texture.png'));
   const phase = useGameStore((s) => s.state.phase);
   const idx = teamIndex(state, team.id);
   const pos = teamCastlePos(state, team.id);
